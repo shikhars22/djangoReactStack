@@ -14,7 +14,7 @@ function App() {
         img: 'https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg',
       },
       {
-        name: 'Shireesh',
+        name: 'Ramesh',
         role: 'Manager',
         img: 'https://images.pexels.com/photos/2709388/pexels-photo-2709388.jpeg',
       },
@@ -29,12 +29,12 @@ function App() {
         img: 'https://images.pexels.com/photos/1840608/pexels-photo-1840608.jpeg',
       },
       {
-        name: 'Puneet',
+        name: 'Jatayu',
         role: 'Investor',
         img: 'https://images.pexels.com/photos/2741701/pexels-photo-2741701.jpeg',
       },
       {
-        name: 'Abhishek',
+        name: 'Suresh',
         role: 'Witness',
         img: 'https://images.pexels.com/photos/4556737/pexels-photo-4556737.jpeg',
       },
