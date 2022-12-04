@@ -6,7 +6,7 @@ function App() {
   const showEmployees = true;
   const [role, setRole] = useState('dev');
   return (
-    <div className="App bg-green-300">
+    <div className="App">
       {showEmployees ? (
       <>
         <input 
@@ -20,9 +20,19 @@ function App() {
             }
           } 
         />
-        <Employee name="Shikhar" role="CEO" />
-        <Employee name="Shireesh" role={role} />
-        <Employee name="Rufo"/>
+        <div className='flex flex-wrap'>
+          <Employee name="Shikhar" role="CEO" img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg' />
+          <Employee name="Shireesh" role={role} img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg' />
+          <Employee name="Rufo"  img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg'/>
+        
+          <Employee name="Shikhar" role="CEO" img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg' />
+          <Employee name="Shireesh" role={role} img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg' />
+          <Employee name="Rufo"  img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg'/>
+        
+          <Employee name="Shikhar" role="CEO" img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg' />
+          <Employee name="Shireesh" role={role} img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg' />
+          <Employee name="Rufo"  img='https://images.pexels.com/photos/4776/man-sunglasses-art-graffiti.jpg'/>
+        </div>
       </>
     ) : (
     <p>You cannot see the employees</p>
