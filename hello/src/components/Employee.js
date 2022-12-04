@@ -1,6 +1,6 @@
 function Employee (props) {
     return (
-        <>
+        <div className="text-3xl font-bold underline">
             <h1>Employee {props.name}</h1>
             <p>
                 {
@@ -8,7 +8,8 @@ function Employee (props) {
                     :'No role'
                 }
             </p>
-        </>
+            <br/>
+        </div>
     )
 }
 

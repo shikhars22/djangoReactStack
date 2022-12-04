@@ -1,4 +1,4 @@
-import './App.css';
+import './index.css';
 import Employee from './components/Employee';
 import {useState} from 'react'
 
@@ -6,10 +6,12 @@ function App() {
   const showEmployees = true;
   const [role, setRole] = useState('dev');
   return (
-    <div className="App">
+    <div className="App bg-green-300">
       {showEmployees ? (
       <>
         <input 
+          class="placeholder:italic placeholder:text-slate-400 block bg-white  border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+          placeholder="Input Shireesh's role"
           type={"text"} 
           onChange={
             (e) => {
