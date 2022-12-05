@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {v4 as uuidv4} from 'uuid'
 import AddEmployee from './components/AddEmployee';
 import EditEmployee from './components/EditEmployee';
+import Header from './components/Header';
 
 function App() {
   const showEmployees = true;
@@ -69,10 +70,11 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App bg-gray-300 min-h-screen">
+      <Header />
       {showEmployees ? (
       <>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap my-2'>
           {employees.map((employee) => {
             const editEmployee = (
               <EditEmployee 
