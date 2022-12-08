@@ -40,12 +40,6 @@ export default function Header(props) {
                         <NavLink
                             key={item.name}
                             to={item.href}
-                            // className={classNames(
-                            // item.current ? 
-                            // 'bg-gray-900 text-white' : 
-                            // 'no-underline text-gray-300 hover:bg-gray-700 hover:text-white',
-                            // 'no-underline px-3 py-2 rounded-md text-sm font-medium'
-                            // )}
                             className={({isActive}) => {
                                 // console.log(item.href + ' ' + isActive)
                                 return ('no-underline px-3 py-2 rounded-md text-sm font-medium ' +
@@ -80,12 +74,6 @@ export default function Header(props) {
                     <NavLink
                     key={item.name}
                     to={item.href}
-                    // className={classNames(
-                    // item.current ? 
-                    // 'bg-gray-900 text-white' : 
-                    // 'no-underline text-gray-300 hover:bg-gray-700 hover:text-white',
-                    // 'no-underline px-3 py-2 rounded-md text-sm font-medium'
-                    // )}
                     className={({isActive}) => {
                         // console.log(item.href + ' ' + isActive)
                         return ('no-underline block px-3 py-2 rounded-md text-base font-medium ' +
@@ -109,7 +97,7 @@ export default function Header(props) {
                 {props.children}
             </div>
         </div>
-        <footer>Test</footer>
+        <footer className='bg-gray-800 text-gray-200 p-2 flex justify-center'>@skgworks</footer>
     </>
   );
 }
