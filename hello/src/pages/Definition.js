@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid'
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NotFound from "../components/404";
 import { Button } from "bootstrap";
+import DefinitionSearch from "../components/DefinitionSearch";
 
 export default function Definition(){
 
@@ -77,6 +78,12 @@ export default function Definition(){
                         {meaning.definitions[0].definition}
                     </p>
                 )})}
+                <br/>
+                <p>
+                    <h6>You can search another word</h6>
+                    <DefinitionSearch />
+                </p>
+                <br/>
                 <button 
                     className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded' 
                     onClick={() => {
