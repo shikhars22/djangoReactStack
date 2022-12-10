@@ -79,10 +79,10 @@ export default function Definition(){
                     </p>
                 )})}
                 <br/>
-                <p>
-                    <h6>You can search another word</h6>
+                <h6>You can search another word</h6>
+                <div>
                     <DefinitionSearch />
-                </p>
+                </div>
                 <br/>
                 <button 
                     className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded' 

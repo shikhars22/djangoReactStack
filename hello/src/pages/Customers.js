@@ -1,3 +1,44 @@
+import { useEffect, useState } from "react"
+
 export default function Customers() {
-    return <h1>Hello There SKG!</h1>
+
+    const [customers, setCustomers] = useState();
+
+    useEffect(() => {
+        // const url = 'https://httpstat.us/501';
+        const url = 'http://localhost:8000/api/customers/';
+
+        console.log('hi SKG')
+        fetch(url)
+            .then((response) => {
+                // console.log('response received');
+                // console.log(response.json())
+                return response.json()
+            })
+            .then((data) => {
+                console.log(data);
+                setCustomers(data.customers);
+            })
+            .catch((e) => {
+                console.log(e.message);
+            });
+    }, [])
+
+    return (
+        <>
+            {customers ? 
+            <> 
+                <h1>
+                    Here are the customers
+                </h1> 
+                {customers.map((customer) => {
+                return (
+                    <p key={customer.id}>
+                        {customer.name + ' : '}
+                        {customer.industry}
+                    </p>
+                )})}
+            </> : null}
+        </>
+    )
 }
