@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 
 export default function Customers() {
 
@@ -34,8 +35,11 @@ export default function Customers() {
                 {customers.map((customer) => {
                 return (
                     <p key={customer.id}>
-                        {customer.name + ' : '}
-                        {customer.industry}
+                        <Link to={'/customers/' + customer.id}>
+                            {customer.name}
+                        </Link>
+                        <br/><br/>
+                        {/* {customer.industry} */}
                     </p>
                 )})}
             </> : null}

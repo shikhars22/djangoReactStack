@@ -7,3 +7,9 @@ def customers(request):
     data = Customer.objects.all()
     serializer = CustomerSerializer(data, many=True)
     return JsonResponse({'customers': serializer.data})
+
+def customer(request, id):
+    # invoke serializer and return to client
+    data = Customer.objects.get(pk=id)
+    serializer = CustomerSerializer(data)
+    return JsonResponse({'customer': serializer.data})
