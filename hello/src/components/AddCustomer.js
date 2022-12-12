@@ -5,27 +5,29 @@ export default function AddCustomer(props) {
   const [name, setName] = useState('');
   const [industry, setIndustry] = useState('');
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(props.show);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   return (
     <>
       <button 
         variant="primary" 
-        onClick={handleShow}
+        onClick={props.toggleShow}
         className="block mx-auto m-2 bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded">
         + Add Customer
       </button>
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={props.show}
+        onHide={props.toggleShow}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add customer</Modal.Title>
+          <Modal.Title>
+            Add customer
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form 
@@ -87,13 +89,13 @@ export default function AddCustomer(props) {
         <Modal.Footer>
           <button 
           className='bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded'
-          onClick={handleClose}>
+          onClick={props.toggleShow}>
             Close
           </button>
           <button 
-          className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded' 
-          form='editmodal'
-          onClick={handleClose}>
+            className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded' 
+            form='editmodal'
+          >
             Add
           </button>
         </Modal.Footer>

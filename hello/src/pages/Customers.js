@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
-import { json, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AddCustomer from "../components/AddCustomer";
 import { apiCustomerUrl, baseUrl } from "../shared";
 
 export default function Customers() {
 
     const [customers, setCustomers] = useState();
+    const [show, setShow] = useState(false);
+
+    function toggleShow() {
+        setShow(!show)
+    }
 
     useEffect(() => {
         // const url = 'https://httpstat.us/501';
@@ -43,9 +48,13 @@ export default function Customers() {
                 if (!response.ok) {
                     throw new Error('Something went wrong')
                 }
-                return response.json()
+                return response.json();
             })
-            .then((data) => {console.log(data)})
+            .then((data) => {
+                toggleShow();
+                console.log(data);
+                setCustomers([...customers, data.customer]);
+            })
             .catch((e) => {console.log(e.message)});
     }
 
@@ -59,7 +68,7 @@ export default function Customers() {
                         return (
                             <li key={customer.id}>
                                 <Link to={'/customers/' + customer.id}>
-                                    {customer.name + ' : ' + customer.industry}
+                                    {customer.id + ' : ' + customer.name + ' : ' + customer.industry}
                                 </Link>
                                 <br /><br />
                                 {/* {customer.industry} */}
@@ -67,7 +76,11 @@ export default function Customers() {
                         );
                     })}
                 </ul>
-                <AddCustomer NewCustomer={NewCustomer} />
+                <AddCustomer
+                    NewCustomer={NewCustomer}
+                    show={show}
+                    toggleShow={toggleShow}
+                />
             </> : null}
         </>
     )
