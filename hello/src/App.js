@@ -7,6 +7,7 @@ import Customers from './pages/Customers';
 import Dictionary from './pages/Dictionary';
 import Definition from './pages/Definition';
 import NotFound from './components/404';
+import Customer from './pages/Customer';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/employees' element={<Employees />} />
           <Route path='/customers' element={<Customers />} />
+          <Route path='/customers/:id' element={<Customer />} />
           <Route path='/404' element={<NotFound />} />
           <Route path='/*' element={<NotFound />} />
           <Route path='/dictionary/:search' element={<Definition />} />
