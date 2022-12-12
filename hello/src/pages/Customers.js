@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
-import { baseUrl } from "../shared";
+import { json, Link } from "react-router-dom";
+import AddCustomer from "../components/AddCustomer";
+import { apiCustomerUrl, baseUrl } from "../shared";
 
 export default function Customers() {
 
@@ -8,7 +9,7 @@ export default function Customers() {
 
     useEffect(() => {
         // const url = 'https://httpstat.us/501';
-        const url = baseUrl + 'api/customers/';
+        const url = baseUrl + apiCustomerUrl;
 
         console.log('hi SKG')
         fetch(url)
@@ -26,23 +27,47 @@ export default function Customers() {
             });
     }, [])
 
+    function NewCustomer(name, industry) {
+        
+        const data = { name: name, industry: industry }
+        
+        console.log('inside NewCustomer fn');
+        const url = baseUrl + apiCustomerUrl;
+        
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong')
+                }
+                return response.json()
+            })
+            .then((data) => {console.log(data)})
+            .catch((e) => {console.log(e.message)});
+    }
+
     return (
         <>
             {customers ? 
             <> 
-                <h1>
-                    Here are the customers
-                </h1> 
-                {customers.map((customer) => {
-                return (
-                    <p key={customer.id}>
-                        <Link to={'/customers/' + customer.id}>
-                            {customer.name}
-                        </Link>
-                        <br/><br/>
-                        {/* {customer.industry} */}
-                    </p>
-                )})}
+                <h1>Here are the customers</h1>
+                <ul>
+                    {customers.map((customer) => {
+                        return (
+                            <li key={customer.id}>
+                                <Link to={'/customers/' + customer.id}>
+                                    {customer.name + ' : ' + customer.industry}
+                                </Link>
+                                <br /><br />
+                                {/* {customer.industry} */}
+                            </li>
+                        );
+                    })}
+                </ul>
+                <AddCustomer NewCustomer={NewCustomer} />
             </> : null}
         </>
     )
