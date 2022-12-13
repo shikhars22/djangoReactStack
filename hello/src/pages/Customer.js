@@ -15,9 +15,17 @@ export default function Customer() {
     const url = baseUrl + apiCustomerUrl + id;
 
     useEffect(() => {
-        console.log('customer', customer)
-        console.log('temp customer', tempCustomer)
-        console.log('changed? ', changed)
+        if (!customer) return
+        if (!customer) return
+        
+        // console.log('inside compareCustomer fn')
+        // console.log(customer, tempCustomer)
+        let equal = true;
+        if (!(customer.name === tempCustomer.name
+            & customer.industry === tempCustomer.industry)) {
+            equal = false;
+        }
+        if (equal) setChanged(false);
     });
 
     useEffect(() => {
@@ -79,6 +87,11 @@ export default function Customer() {
             })
             .catch((e) => { console.log(e) })
     }
+
+    function compareCustomers() {
+
+    }
+
     return (
         <div>
             {notFound
@@ -147,9 +160,13 @@ export default function Customer() {
             
             {changed
                 ? 
+                    <p>
                     <div className="flex">
                         <br /><br />
                         <button
+                            className='m-2 bg-purple-500 hover:bg-purple-400 
+                            text-white font-bold py-2 px-4 border-b-4 
+                            border-purple-700 hover:border-purple-500 rounded'
                             onClick={() => {
                                     setTempCustomer({...customer})
                                 }
@@ -158,17 +175,23 @@ export default function Customer() {
                         Cancel
                         </button>
                         <button
+                            className='m-2 bg-purple-500 hover:bg-purple-400 
+                            text-white font-bold py-2 px-4 border-b-4 
+                            border-purple-700 hover:border-purple-500 rounded'
                             onClick={updateCustomer}
                         >
                             Save
                         </button>
                     </div>
+                    </p>
                 :
                     null
             }
             {/* <br /><br /> */}
             <button
-                className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded' 
+                className='bg-purple-500 hover:bg-purple-400 
+                text-white font-bold py-2 px-4 border-b-4 
+                border-purple-700 hover:border-purple-500 rounded' 
                 onClick={(e) => {deleteCustomer()}}>
                 Delete
             </button>
