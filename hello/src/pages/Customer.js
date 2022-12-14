@@ -60,7 +60,8 @@ export default function Customer() {
 			});
 	}, []);
 
-	function updateCustomer() {
+	function updateCustomer(e) {
+		e.preventDefault();
 		console.log('inside update customer');
 		const url = baseUrl + apiCustomerUrl + id;
 		fetch(url, {
@@ -113,7 +114,7 @@ export default function Customer() {
 	function compareCustomers() {}
 
 	return (
-		<div>
+		<div className='p-3'>
 			{notFound ? (
 				<>
 					<NotFound />
@@ -123,62 +124,76 @@ export default function Customer() {
 				</>
 			) : null}
 			{customer ? (
-				<div className='flex justify-left'>
-					<ul>
-						<input
-							type={'text'}
-							className='m-2 block shrink min-w-0 bg-gray-300 
+				<div>
+					<div
+						className='m-2 p-8 max-w-sm min-w-sm 
+					bg-white rounded-xl shadow-lg space-y-2
+					sm:py-4 sm:flex sm:items-center sm:space-y-0 
+					sm:space-x-6 border-b-4 border-purple-700 hover:border-purple-500'>
+						<form
+							className='w-full max-w-sm'
+							id='customer'
+							onSubmit={updateCustomer}>
+							<div className='md:flex md:items-center'>
+								<div className='md:w-1/4'>
+									<label for='name'>Name</label>
+								</div>
+								<div className='md:w-3/4'>
+									<input
+										id='name'
+										type={'text'}
+										className='m-2 block shrink min-w-0 bg-gray-300 
                                 appearance-none border-2 border-gray-300 
                                 rounded w-full py-2 px-4 text-gray-700 
                                 leading-tight focus:outline-none 
                                 focus:bg-white focus:border-purple-500'
-							value={tempCustomer.id}
-						/>
-						<input
-							type={'text'}
-							className='m-2 block shrink min-w-0 bg-gray-300 
+										value={tempCustomer.name}
+										onChange={(e) => {
+											setTempCustomer({
+												...tempCustomer,
+												name: e.target.value,
+											});
+											console.log(e.target.value);
+											setChanged(true);
+										}}
+									/>
+								</div>
+							</div>
+							<div className='md:flex md:items-center mb-2'>
+								<div className='md:w-1/4'>
+									<label for='industry'>Industry</label>
+								</div>
+								<div className='md:w-3/4'>
+									<input
+										id='industry'
+										type={'text'}
+										className='m-2 block shrink min-w-0 bg-gray-300 
                                 appearance-none border-2 border-gray-300 
                                 rounded w-full py-2 px-4 text-gray-700 
                                 leading-tight focus:outline-none 
                                 focus:bg-white focus:border-purple-500'
-							value={tempCustomer.name}
-							onChange={(e) => {
-								setTempCustomer({
-									...tempCustomer,
-									name: e.target.value,
-								});
-								console.log(e.target.value);
-								setChanged(true);
-							}}
-						/>
-						<input
-							type={'text'}
-							className='m-2 block shrink min-w-0 bg-gray-300 
-                                appearance-none border-2 border-gray-300 
-                                rounded w-full py-2 px-4 text-gray-700 
-                                leading-tight focus:outline-none 
-                                focus:bg-white focus:border-purple-500'
-							value={tempCustomer.industry}
-							onChange={(e) => {
-								setTempCustomer({
-									...tempCustomer,
-									industry: e.target.value,
-								});
-								console.log(e.target.value);
-								setChanged(true);
-							}}
-						/>
-					</ul>
+										value={tempCustomer.industry}
+										onChange={(e) => {
+											setTempCustomer({
+												...tempCustomer,
+												industry: e.target.value,
+											});
+											console.log(e.target.value);
+											setChanged(true);
+										}}
+									/>
+								</div>
+							</div>
+						</form>
+					</div>
 
 					{changed ? (
 						<p>
-							<div className='flex'>
+							<div className='mb-2'>
 								<br />
 								<br />
 								<button
-									className='m-2 bg-purple-500 hover:bg-purple-400 
-                text-white font-bold py-2 px-4 border-b-4 
-                border-purple-700 hover:border-purple-500 rounded'
+									className='bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded'
 									onClick={() => {
 										setTempCustomer({ ...customer });
 										setError(undefined);
@@ -189,7 +204,7 @@ export default function Customer() {
 									className='m-2 bg-purple-500 hover:bg-purple-400 
                 text-white font-bold py-2 px-4 border-b-4 
                                         border-purple-700 hover:border-purple-500 rounded'
-									onClick={updateCustomer}>
+									form='customer'>
 									Save
 								</button>
 							</div>
@@ -198,20 +213,27 @@ export default function Customer() {
 					<br />
 					<br />
 					<button
-						className='bg-purple-500 hover:bg-purple-400 
-                text-white font-bold py-2 px-4 border-b-4 
-                border-purple-700 hover:border-purple-500 rounded'
+						className='bg-slate-800 hover:bg-gray-400 text-white 
+                        font-bold py-2 px-4 border-b-4 border-gray-700 
+                        hover:border-gray-500 rounded'
 						onClick={(e) => {
 							deleteCustomer();
 						}}>
 						Delete
 					</button>
+					<Link to={homeCustomersUrl}>
+						<button
+							className='no-underline m-2 bg-purple-500 hover:bg-purple-400
+						text-white font-bold py-2 px-4 border-b-4
+						                        border-purple-700 hover:border-purple-500 rounded'>
+							← Go back
+						</button>
+					</Link>
 				</div>
 			) : null}
 			{error ? <p>{error}</p> : null}
 			<br />
 			<br />
-			<Link to={homeCustomersUrl}>Go back</Link>
 		</div>
 	);
 }
