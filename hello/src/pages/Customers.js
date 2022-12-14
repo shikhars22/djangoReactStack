@@ -1,87 +1,125 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
-import AddCustomer from "../components/AddCustomer";
-import { apiCustomerUrl, baseUrl } from "../shared";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import AddCustomer from '../components/AddCustomer';
+import { apiCustomerUrl, baseUrl } from '../shared';
 
 export default function Customers() {
+	const [customers, setCustomers] = useState();
+	const [show, setShow] = useState(false);
+	const navigate = useNavigate('');
 
-    const [customers, setCustomers] = useState();
-    const [show, setShow] = useState(false);
+	function toggleShow() {
+		setShow(!show);
+	}
 
-    function toggleShow() {
-        setShow(!show)
-    }
+	useEffect(() => {
+		// const url = 'https://httpstat.us/501';
+		const url = baseUrl + apiCustomerUrl;
 
-    useEffect(() => {
-        // const url = 'https://httpstat.us/501';
-        const url = baseUrl + apiCustomerUrl;
+		console.log('hi SKG');
+		fetch(url)
+			.then((response) => {
+				// console.log('response received');
+				// console.log(response.json())
+				if (response.status === 401) {
+					navigate('/login');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				console.log(data);
+				setCustomers(data.customers);
+			})
+			.catch((e) => {
+				console.log(e.message);
+			});
+	}, []);
 
-        console.log('hi SKG')
-        fetch(url)
-            .then((response) => {
-                // console.log('response received');
-                // console.log(response.json())
-                return response.json()
-            })
-            .then((data) => {
-                console.log(data);
-                setCustomers(data.customers);
-            })
-            .catch((e) => {
-                console.log(e.message);
-            });
-    }, [])
+	function NewCustomer(name, industry) {
+		const data = { name: name, industry: industry };
 
-    function NewCustomer(name, industry) {
-        
-        const data = { name: name, industry: industry }
-        
-        console.log('inside NewCustomer fn');
-        const url = baseUrl + apiCustomerUrl;
-        
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Something went wrong')
-                }
-                return response.json();
-            })
-            .then((data) => {
-                toggleShow();
-                console.log(data);
-                setCustomers([...customers, data.customer]);
-            })
-            .catch((e) => {console.log(e.message)});
-    }
+		console.log('inside NewCustomer fn');
+		const url = baseUrl + apiCustomerUrl;
 
-    return (
-        <>
-            {customers ? 
-            <> 
-                <h1>Here are the customers</h1>
-                <ul>
-                    {customers.map((customer) => {
-                        return (
-                            <li key={customer.id}>
-                                <Link to={'/customers/' + customer.id}>
-                                    {customer.id + ' : ' + customer.name + ' : ' + customer.industry}
-                                </Link>
-                                <br /><br />
-                                {/* {customer.industry} */}
-                            </li>
-                        );
-                    })}
-                </ul>
-                <AddCustomer
-                    NewCustomer={NewCustomer}
-                    show={show}
-                    toggleShow={toggleShow}
-                />
-            </> : null}
-        </>
-    )
+		fetch(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data),
+		})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Something went wrong');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				toggleShow();
+				console.log(data);
+				setCustomers([...customers, data.customer]);
+			})
+			.catch((e) => {
+				console.log(e.message);
+			});
+	}
+
+	return (
+		<>
+			<h1>Here are the customers</h1>
+			{customers ? (
+				<div>
+					<div className='flex flex-wrap'>
+						{customers.map((customer) => {
+							return (
+								<div key={customer.id}>
+									<Link
+										className='no-underline'
+										to={'/customers/' + customer.id}>
+										<button
+											className='m-2 p-8 max-w-sm min-w-sm 
+					bg-white rounded-xl shadow-lg space-y-2
+					sm:py-4 sm:flex sm:items-center sm:space-y-0 
+					sm:space-x-6 border-b-4 border-purple-700 hover:border-purple-500'
+											//className='m-2 bg-purple-500 hover:bg-purple-400
+											// text-white font-bold py-2 px-4 border-b-4
+											//border-purple-700 hover:border-purple-500 rounded'
+											form='customer'>
+											<div
+												className='text-center space-y-2 
+											sm:text-left'>
+												<div className='space-y-0.5'>
+													<p
+														className='text-lg text-black 
+													font-semibold'>
+														{customer.name}
+													</p>
+													<p className='text-slate-500 font-medium'>
+														{customer.industry}
+													</p>
+												</div>
+											</div>
+											{/* {customer.id +
+												' : ' +
+												customer.name +
+												' : ' +
+												customer.industry} */}
+										</button>
+									</Link>
+									<br />
+									<br />
+									{/* {customer.industry} */}
+								</div>
+							);
+						})}
+					</div>
+					<div>
+						<AddCustomer
+							NewCustomer={NewCustomer}
+							show={show}
+							toggleShow={toggleShow}
+						/>
+					</div>
+				</div>
+			) : null}
+		</>
+	);
 }
