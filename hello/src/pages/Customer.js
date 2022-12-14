@@ -40,6 +40,9 @@ export default function Customer() {
 					// navigate('/404', { replace: true });
 					setNotFound(true);
 				}
+				if (response.status === 401) {
+					navigate('/login');
+				}
 				if (!response.ok) {
 					console.log('response', response);
 					throw new Error(

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AddCustomer from '../components/AddCustomer';
 import { apiCustomerUrl, baseUrl } from '../shared';
 
 export default function Customers() {
 	const [customers, setCustomers] = useState();
 	const [show, setShow] = useState(false);
+	const navigate = useNavigate('');
 
 	function toggleShow() {
 		setShow(!show);
@@ -20,6 +21,9 @@ export default function Customers() {
 			.then((response) => {
 				// console.log('response received');
 				// console.log(response.json())
+				if (response.status === 401) {
+					navigate('/login');
+				}
 				return response.json();
 			})
 			.then((data) => {
