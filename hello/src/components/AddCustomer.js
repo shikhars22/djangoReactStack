@@ -89,7 +89,9 @@ export default function AddCustomer(props) {
 						Close
 					</button>
 					<button
-						className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded'
+						className='bg-purple-500 hover:bg-purple-400 
+						text-white font-bold py-2 px-4 border-b-4 
+						border-purple-700 hover:border-purple-500 rounded'
 						form='editmodal'>
 						Add
 					</button>

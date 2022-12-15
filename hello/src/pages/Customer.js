@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import NotFound from '../components/404';
-import { apiCustomerUrl, baseUrl, homeCustomersUrl } from '../shared';
+import { apiCustomerUrl, baseUrl, homeCustomersUrl, loginUrl } from '../shared';
 
 export default function Customer() {
 	const [customer, setCustomer] = useState();
@@ -11,6 +11,7 @@ export default function Customer() {
 	const [error, setError] = useState();
 	const navigate = useNavigate();
 	let { id } = useParams();
+	const location = useLocation();
 
 	const url = baseUrl + apiCustomerUrl + id;
 
@@ -34,14 +35,23 @@ export default function Customer() {
 
 	useEffect(() => {
 		// console.log('Test SKg ' + id)
-		fetch(url)
+		fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('access'),
+			},
+		})
 			.then((response) => {
 				if (response.status === 404) {
 					// navigate('/404', { replace: true });
 					setNotFound(true);
 				}
 				if (response.status === 401) {
-					navigate('/login');
+					navigate(loginUrl, {
+						state: {
+							previousUrl: location.pathname,
+						},
+					});
 				}
 				if (!response.ok) {
 					console.log('response', response);
@@ -65,16 +75,24 @@ export default function Customer() {
 
 	function updateCustomer(e) {
 		e.preventDefault();
-		console.log('inside update customer');
+		// console.log('inside update customer');
 		const url = baseUrl + apiCustomerUrl + id;
 		fetch(url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('access'),
 			},
 			body: JSON.stringify(tempCustomer),
 		})
 			.then((response) => {
+				if (response.status === 401) {
+					navigate(loginUrl, {
+						state: {
+							previousUrl: location.pathname,
+						},
+					});
+				}
 				if (!response.ok) {
 					throw new Error('Something went wrong. Press Cancel');
 				}
@@ -100,9 +118,17 @@ export default function Customer() {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('access'),
 			},
 		})
 			.then((response) => {
+				if (response.status === 401) {
+					navigate(loginUrl, {
+						state: {
+							previousUrl: location.pathname,
+						},
+					});
+				}
 				if (!response.ok) {
 					throw new Error('Something went wrong');
 				}
