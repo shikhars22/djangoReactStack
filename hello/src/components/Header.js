@@ -66,12 +66,26 @@ export default function Header(props) {
 													{item.name}
 												</NavLink>
 											))}
-											<NavLink
-												to={loggedIn ? '/logout' : '/login'}
-												className='no-underline px-3 py-2 rounded-md text-sm font-medium 
+											{loggedIn ? (
+												<NavLink
+													to={'/login'}
+													onClick={() => {
+														// console.log('logging out');
+														setLoggedIn(false);
+														localStorage.clear();
+													}}
+													className='no-underline px-3 py-2 rounded-md text-sm font-medium 
                                                 no-underline text-gray-300 hover:bg-gray-700 hover:text-white'>
-												{loggedIn ? 'Logout' : 'Login'}
-											</NavLink>
+													Logout
+												</NavLink>
+											) : (
+												<NavLink
+													to={'/login'}
+													className='no-underline px-3 py-2 rounded-md text-sm font-medium 
+                                                no-underline text-gray-300 hover:bg-gray-700 hover:text-white'>
+													Login
+												</NavLink>
+											)}
 										</div>
 									</div>
 								</div>
@@ -107,12 +121,26 @@ export default function Header(props) {
 										{item.name}
 									</NavLink>
 								))}
-								<NavLink
-									to={loggedIn ? '/logout' : '/login'}
-									className='no-underline block px-3 py-2 rounded-md text-base font-medium 
+								{loggedIn ? (
+									<NavLink
+										to={'/login'}
+										onClick={() => {
+											// console.log('logging out');
+											setLoggedIn(false);
+											localStorage.clear();
+										}}
+										className='no-underline block px-3 py-2 rounded-md text-base font-medium 
                                                 no-underline text-gray-300 hover:bg-gray-700 hover:text-white'>
-									{loggedIn ? 'Logout' : 'Login'}
-								</NavLink>
+										Logout
+									</NavLink>
+								) : (
+									<NavLink
+										to={'/login'}
+										className='no-underline block px-3 py-2 rounded-md text-base font-medium 
+                                                no-underline text-gray-300 hover:bg-gray-700 hover:text-white'>
+										Login
+									</NavLink>
+								)}
 							</div>
 						</Disclosure.Panel>
 					</>

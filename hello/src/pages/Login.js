@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../App';
 import { apiLoginUrl, baseUrl, homeCustomersUrl } from '../shared';
@@ -9,10 +9,6 @@ export default function Login() {
 	const location = useLocation();
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
 	const navigate = useNavigate();
-
-	// useEffect(() => {
-	// 	console.log(location.state.previousUrl);
-	// });
 
 	function login(e) {
 		e.preventDefault();
