@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AddCustomer from '../components/AddCustomer';
-import { apiCustomerUrl, baseUrl } from '../shared';
+import { apiCustomerUrl, baseUrl, homeCustomersUrl, loginUrl } from '../shared';
 
 export default function Customers() {
 	const [customers, setCustomers] = useState();
 	const [show, setShow] = useState(false);
 	const navigate = useNavigate('');
+	const location = useLocation();
 
 	function toggleShow() {
 		setShow(!show);
@@ -16,13 +17,22 @@ export default function Customers() {
 		// const url = 'https://httpstat.us/501';
 		const url = baseUrl + apiCustomerUrl;
 
-		console.log('hi SKG');
-		fetch(url)
+		// console.log('hi SKG');
+		fetch(url, {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('access'),
+			},
+		})
 			.then((response) => {
 				// console.log('response received');
 				// console.log(response.json())
 				if (response.status === 401) {
-					navigate('/login');
+					navigate(loginUrl, {
+						state: {
+							previousUrl: location.pathname,
+						},
+					});
 				}
 				return response.json();
 			})
@@ -43,10 +53,16 @@ export default function Customers() {
 
 		fetch(url, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + localStorage.getItem('access'),
+			},
 			body: JSON.stringify(data),
 		})
 			.then((response) => {
+				if (response.status === 401) {
+					navigate('/login');
+				}
 				if (!response.ok) {
 					throw new Error('Something went wrong');
 				}

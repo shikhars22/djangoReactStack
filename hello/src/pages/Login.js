@@ -1,9 +1,17 @@
-import { useState } from 'react';
-import { apiCustomerUrl, apiLoginUrl, baseUrl } from '../shared';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { apiLoginUrl, baseUrl, homeCustomersUrl } from '../shared';
 
 export default function Login() {
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
+	const location = useLocation();
+
+	const navigate = useNavigate();
+
+	// useEffect(() => {
+	// 	console.log(location.state.previousUrl);
+	// });
 
 	function login(e) {
 		e.preventDefault();
@@ -22,7 +30,16 @@ export default function Login() {
 				return response.json();
 			})
 			.then((data) => {
-				console.log(data);
+				localStorage.setItem('access', data.access);
+				localStorage.setItem('refresh', data.refresh);
+				// console.log(localStorage);
+				// console.log(localStorage.state);
+				// console.log(localStorage?.state?.previousUrl);
+				navigate(
+					location?.state?.previousUrl
+						? location.state.previousUrl
+						: homeCustomersUrl
+				);
 			})
 			.catch((e) => {
 				console.log(e.message);

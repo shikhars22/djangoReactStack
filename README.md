@@ -15,7 +15,11 @@ https://www.youtube.com/watch?v=qp6e0tucEhw&list=PL_c9BZzLwBRKFRIBWEWYCnV4Lk9HE3
 
         git clone https://github.com/shikhars22/djangoReactStack.git
 
-2. Install python 3.10 and NodeJs 14 or higher
+2. Install 
+   1. Git Bash
+   2. Python 3.10
+   3. NodeJs 14 or higher
+
 3. Start the Django server on git bash. Navigate to the cloned repo
 
         cd djangoReactStack
@@ -30,6 +34,8 @@ https://www.youtube.com/watch?v=qp6e0tucEhw&list=PL_c9BZzLwBRKFRIBWEWYCnV4Lk9HE3
 4. Above commands should start your Django backend server
 5. In another git bash terminal, start the react development server
         
+        cd ..
+        cd hello
         sudo npm install
         npm start
 
