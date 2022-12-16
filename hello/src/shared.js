@@ -6,4 +6,6 @@ export const homeCustomersUrl = '/customers/';
 
 export const apiLoginUrl = 'api/token/';
 
+export const apiLoginRefreshUrl = 'api/token/refresh';
+
 export const loginUrl = '/login';
