@@ -1,18 +1,24 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../App';
-import { apiLoginUrl, baseUrl, homeCustomersUrl } from '../shared';
+import { apiRegister, baseUrl, homeCustomersUrl } from '../shared';
 
-export default function Login() {
+export default function Register() {
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
+	const [email, setEmail] = useState();
 	const location = useLocation();
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
 	const navigate = useNavigate();
 
-	function login(e) {
+	useEffect(() => {
+		localStorage.clear();
+		setLoggedIn(false);
+	}, []);
+
+	function register(e) {
 		e.preventDefault();
-		const url = baseUrl + apiLoginUrl;
+		const url = baseUrl + apiRegister;
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -21,6 +27,7 @@ export default function Login() {
 			body: JSON.stringify({
 				username: username,
 				password: password,
+				email: email,
 			}),
 		})
 			.then((response) => {
@@ -52,8 +59,28 @@ export default function Login() {
 					sm:space-x-6 border-b-4 border-purple-700 hover:border-purple-500'>
 			<form
 				className='w-full max-w-sm'
-				id='login'
-				onSubmit={login}>
+				id='register'
+				onSubmit={register}>
+				<div className='md:flex md:items-center'>
+					<div className='md:w-1/4'>
+						<label for='email'>Email</label>
+					</div>
+					<div className='md:w-3/4'>
+						<input
+							id='email'
+							type={'text'}
+							className='m-2 block shrink min-w-0 bg-gray-300 
+                                appearance-none border-2 border-gray-300 
+                                rounded w-full py-2 px-4 text-gray-700 
+                                leading-tight focus:outline-none 
+                                focus:bg-white focus:border-purple-500'
+							value={email}
+							onChange={(e) => {
+								setEmail(e.target.value);
+							}}
+						/>
+					</div>
+				</div>
 				<div className='md:flex md:items-center'>
 					<div className='md:w-1/4'>
 						<label for='username'>Username</label>
@@ -99,8 +126,8 @@ export default function Login() {
 						className='my-4 mx-2 bg-purple-500 hover:bg-purple-400 
 						text-white font-bold py-2 px-4 border-b-4 
 						border-purple-700 hover:border-purple-500 rounded'
-						form='login'>
-						Login
+						form='register'>
+						Register
 					</button>
 				</div>
 			</form>
