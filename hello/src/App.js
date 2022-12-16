@@ -11,6 +11,7 @@ import NotFound from './components/404';
 import Customer from './pages/Customer';
 import Login from './pages/Login';
 import { apiLoginRefreshUrl, baseUrl } from './shared';
+import Register from './pages/Register';
 
 export const LoginContext = createContext();
 
@@ -92,6 +93,10 @@ function App() {
 						<Route
 							path='/login'
 							element={<Login />}
+						/>
+						<Route
+							path='/register'
+							element={<Register />}
 						/>
 					</Routes>
 				</Header>
