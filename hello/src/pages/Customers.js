@@ -11,9 +11,9 @@ export default function Customers() {
 	const location = useLocation();
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
-	useEffect(() => {
-		console.log('loggedIn? ' + loggedIn);
-	});
+	// useEffect(() => {
+	// 	console.log('loggedIn? ' + loggedIn);
+	// });
 
 	function toggleShow() {
 		setShow(!show);
@@ -44,7 +44,7 @@ export default function Customers() {
 				return response.json();
 			})
 			.then((data) => {
-				console.log(data);
+				// console.log(data);
 				setCustomers(data.customers);
 			})
 			.catch((e) => {

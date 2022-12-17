@@ -17,9 +17,9 @@ function classNames(...classes) {
 export default function Header(props) {
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
-	useEffect(() => {
-		console.log('loggedIn? ' + loggedIn);
-	});
+	// useEffect(() => {
+	// 	console.log('loggedIn? ' + loggedIn);
+	// });
 
 	return (
 		<>
