@@ -1,38 +1,43 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import NotFound from '../components/404';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { loginUrl } from '../shared';
 
-export default function useFetch(url) {
+export default function useFetch(url, { method, headers, body }) {
 	const [data, setData] = useState();
 
 	const [errorStatus, setErrorStatus] = useState();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
-		fetch(url)
+		fetch(url, {
+			method: method,
+			headers: headers,
+			body: body,
+		})
 			.then((response) => {
+				if (response.status === 401) {
+					navigate(loginUrl, {
+						state: {
+							previousUrl: location.pathname,
+						},
+					});
+				}
 				if (response.status === 404) {
 					throw response.status;
 				}
-				if (response.status === 401) {
-					navigate('/login');
-				}
 				if (!response.ok) {
 					throw response.status;
-					// throw new Error('Something went wrong');
 				}
 				return response.json();
 			})
 			.then((data) => {
-				if (!errorStatus) {
-					setData(data);
-				}
-				// console.log(data[0].meanings);
+				setData(data);
 			})
 			.catch((e) => {
 				setErrorStatus(e);
 			});
 	}, []);
 
-	return [data, errorStatus];
+	return { data, errorStatus };
 }

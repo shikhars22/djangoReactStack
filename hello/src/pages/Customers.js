@@ -2,24 +2,37 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../App';
 import AddCustomer from '../components/AddCustomer';
+import useFetch from '../hooks/UseFetch';
 import { apiCustomerUrl, baseUrl, homeCustomersUrl, loginUrl } from '../shared';
 
 export default function Customers() {
-	const [customers, setCustomers] = useState();
+	// const [customers, setCustomers] = useState();
 	const [show, setShow] = useState(false);
 	const navigate = useNavigate('');
 	const location = useLocation();
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
-
-	// useEffect(() => {
-	// 	console.log('loggedIn? ' + loggedIn);
-	// });
+	const url = baseUrl + apiCustomerUrl;
+	const method = 'GET';
+	const headers = {
+		'Content-Type': 'application/json',
+		Authorization: 'Bearer ' + localStorage.getItem('access'),
+	};
+	const body = '';
 
 	function toggleShow() {
 		setShow(!show);
 	}
 
+	const { data: { customers } = {}, errorStatus } = useFetch(url, {
+		method: method,
+		headers: headers,
+	});
+
 	useEffect(() => {
+		console.log(customers, '....', errorStatus);
+	});
+
+	/* useEffect(() => {
 		// const url = 'https://httpstat.us/501';
 		const url = baseUrl + apiCustomerUrl;
 
@@ -50,10 +63,10 @@ export default function Customers() {
 			.catch((e) => {
 				console.log(e.message);
 			});
-	}, []);
+	}, []); */
 
 	function NewCustomer(name, industry) {
-		const data = { name: name, industry: industry };
+		/* 	const data = { name: name, industry: industry };
 
 		console.log('inside NewCustomer fn');
 		const url = baseUrl + apiCustomerUrl;
@@ -82,8 +95,10 @@ export default function Customers() {
 			})
 			.catch((e) => {
 				console.log(e.message);
-			});
+			}); */
 	}
+
+	// return <p>Work in Progress</p>;
 
 	return (
 		<>
@@ -134,13 +149,13 @@ export default function Customers() {
 							);
 						})}
 					</div>
-					<div>
+					{/* <div>
 						<AddCustomer
 							NewCustomer={NewCustomer}
 							show={show}
 							toggleShow={toggleShow}
 						/>
-					</div>
+					</div> */}
 				</div>
 			) : null}
 		</>
