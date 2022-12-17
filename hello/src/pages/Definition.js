@@ -10,9 +10,16 @@ export default function Definition() {
 	const navigate = useNavigate();
 	let { search } = useParams();
 
-	const [word, notFound] = useFetch(
-		'https://api.dictionaryapi.dev/api/v2/entries/en/' + search
+	const { data: [{ meanings: word }] = [{}], notFound } = useFetch(
+		'https://api.dictionaryapi.dev/api/v2/entries/en/' + search,
+		{
+			method: 'GET',
+		}
 	);
+
+	// useEffect(() => {
+	// 	console.log(word);
+	// });
 
 	if (notFound === 404) {
 		return (
@@ -39,10 +46,10 @@ export default function Definition() {
 
 	return (
 		<>
-			{word?.[0]?.meanings ? (
+			{word ? (
 				<>
 					<h1>Here is the definition</h1>
-					{word[0].meanings.map((meaning) => {
+					{word.map((meaning) => {
 						return (
 							<p key={uuidv4()}>
 								{meaning.partOfSpeech + ' : '}

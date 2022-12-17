@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loginUrl } from '../shared';
 
-export default function useFetch(url, { method, headers, body }) {
+export default function useFetch(url, { method, headers, body } = {}) {
 	const [data, setData] = useState();
 
 	const [errorStatus, setErrorStatus] = useState();
@@ -10,6 +10,7 @@ export default function useFetch(url, { method, headers, body }) {
 	const location = useLocation();
 
 	useEffect(() => {
+		// console.log(method, headers, body);
 		fetch(url, {
 			method: method,
 			headers: headers,
@@ -39,5 +40,5 @@ export default function useFetch(url, { method, headers, body }) {
 			});
 	}, []);
 
-	return { data, errorStatus };
+	return { data, setData, errorStatus };
 }
