@@ -2,88 +2,54 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../App';
 import AddCustomer from '../components/AddCustomer';
+import useFetch from '../hooks/UseFetch';
 import { apiCustomerUrl, baseUrl, homeCustomersUrl, loginUrl } from '../shared';
 
 export default function Customers() {
-	const [customers, setCustomers] = useState();
+	// const [customers, setCustomers] = useState();
 	const [show, setShow] = useState(false);
 	const navigate = useNavigate('');
 	const location = useLocation();
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
-
-	useEffect(() => {
-		console.log('loggedIn? ' + loggedIn);
-	});
+	const url = baseUrl + apiCustomerUrl;
+	// const method = 'GET';
+	const headers = {
+		'Content-Type': 'application/json',
+		Authorization: 'Bearer ' + localStorage.getItem('access'),
+	};
+	const body = '';
 
 	function toggleShow() {
 		setShow(!show);
 	}
 
-	useEffect(() => {
-		// const url = 'https://httpstat.us/501';
-		const url = baseUrl + apiCustomerUrl;
+	const {
+		request,
+		appendData,
+		data: { customers } = {},
+		errorStatus,
+	} = useFetch(url, {
+		method: 'GET',
+		headers: headers,
+	});
 
-		// console.log('hi SKG');
-		fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + localStorage.getItem('access'),
-			},
-		})
-			.then((response) => {
-				// console.log('response received');
-				// console.log(response.json())
-				if (response.status === 401) {
-					setLoggedIn(false);
-					navigate(loginUrl, {
-						state: {
-							previousUrl: location.pathname,
-						},
-					});
-				}
-				return response.json();
-			})
-			.then((data) => {
-				console.log(data);
-				setCustomers(data.customers);
-			})
-			.catch((e) => {
-				console.log(e.message);
-			});
+	useEffect(() => {
+		request();
 	}, []);
 
+	// useEffect(() => {
+	// 	console.log(customers, errorStatus, request, appendData);
+	// });
+
 	function NewCustomer(name, industry) {
-		const data = { name: name, industry: industry };
+		appendData({ name: name, industry: industry });
 
-		console.log('inside NewCustomer fn');
-		const url = baseUrl + apiCustomerUrl;
-
-		fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + localStorage.getItem('access'),
-			},
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.status === 401) {
-					navigate('/login');
-				}
-				if (!response.ok) {
-					throw new Error('Something went wrong');
-				}
-				return response.json();
-			})
-			.then((data) => {
-				toggleShow();
-				console.log(data);
-				setCustomers([...customers, data.customer]);
-			})
-			.catch((e) => {
-				console.log(e.message);
-			});
+		if (!errorStatus) {
+			toggleShow();
+		}
 	}
+
+	// return <p>Work in Progress</p>;
 
 	return (
 		<>

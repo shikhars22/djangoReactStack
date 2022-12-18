@@ -604,3 +604,46 @@
   604  history
   605  cd ..
   606  history > history.txt
+  607  git status
+  608  git add .
+  609  git status
+  610  git commit -m "Lesson 42 done"
+  611  git add .
+  612  git commit -m "Lesson 43 done"
+  613  git push origin devskg 
+  614  git status
+  615  git add .
+  616  git commit -m "Lesson 45 done"
+  617  git push origin devskg 
+  618  clear
+  619  git --username
+  620  git config
+  621  git push origin devskg
+  622  git commit -m "Lesson 46 done"
+  623  git add .
+  624  git commit -m "Lesson 46 done"
+  625  git status
+  626  git add .
+  627  git commit -m "Lesson 46 done"
+  628  git status
+  629  git add .
+  630  git commit -m "Lesson 47 done"
+  631  git add .
+  632  git commit -m "Lesson 49 done"
+  633  git push origin devskg
+  634  npm run build
+  635  cd hello/
+  636  npm run build
+  637  cd ..
+  638  git add .
+  639  git status
+  640  git commit -m "Lesson 50 done"
+  641  git status
+  642  git add .
+  643  git commit -m "Lesson 51 done"
+  644  git add .
+  645  git commit -m "Lesson 52 done"
+  646  git add .
+  647  git commit -m "Lesson 53 done"
+  648  history
+  649  history > history.txt 
