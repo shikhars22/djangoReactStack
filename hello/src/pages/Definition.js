@@ -10,18 +10,19 @@ export default function Definition() {
 	const navigate = useNavigate();
 	let { search } = useParams();
 
-	const { data: [{ meanings: word }] = [{}], notFound } = useFetch(
-		'https://api.dictionaryapi.dev/api/v2/entries/en/' + search,
-		{
-			method: 'GET',
-		}
-	);
+	const {
+		request,
+		data: [{ meanings: word }] = [{}],
+		errorStatus,
+	} = useFetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + search, {
+		method: 'GET',
+	});
 
-	// useEffect(() => {
-	// 	console.log(word);
-	// });
+	useEffect(() => {
+		request();
+	});
 
-	if (notFound === 404) {
+	if (errorStatus === 404) {
 		return (
 			<>
 				<NotFound />
@@ -33,7 +34,7 @@ export default function Definition() {
 			</>
 		);
 	}
-	if (notFound) {
+	if (errorStatus) {
 		return (
 			<>
 				<p>Something went wrong, try again?</p>
@@ -64,7 +65,9 @@ export default function Definition() {
 					</div>
 					<br />
 					<button
-						className='bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-500 rounded'
+						className='bg-purple-500 hover:bg-purple-400 
+						text-white font-bold py-2 px-4 border-b-4 
+						border-purple-700 hover:border-purple-500 rounded'
 						onClick={() => {
 							navigate('/dictionary/');
 						}}>

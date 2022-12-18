@@ -12,7 +12,7 @@ export default function Customers() {
 	const location = useLocation();
 	const [loggedIn, setLoggedIn] = useContext(LoginContext);
 	const url = baseUrl + apiCustomerUrl;
-	const method = 'GET';
+	// const method = 'GET';
 	const headers = {
 		'Content-Type': 'application/json',
 		Authorization: 'Bearer ' + localStorage.getItem('access'),
@@ -23,79 +23,30 @@ export default function Customers() {
 		setShow(!show);
 	}
 
-	const { data: { customers } = {}, errorStatus } = useFetch(url, {
-		method: method,
+	const {
+		request,
+		appendData,
+		data: { customers } = {},
+		errorStatus,
+	} = useFetch(url, {
+		method: 'GET',
 		headers: headers,
 	});
 
 	useEffect(() => {
-		console.log(customers, '....', errorStatus);
-	});
+		request();
+	}, []);
 
-	/* useEffect(() => {
-		// const url = 'https://httpstat.us/501';
-		const url = baseUrl + apiCustomerUrl;
-
-		// console.log('hi SKG');
-		fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + localStorage.getItem('access'),
-			},
-		})
-			.then((response) => {
-				// console.log('response received');
-				// console.log(response.json())
-				if (response.status === 401) {
-					setLoggedIn(false);
-					navigate(loginUrl, {
-						state: {
-							previousUrl: location.pathname,
-						},
-					});
-				}
-				return response.json();
-			})
-			.then((data) => {
-				// console.log(data);
-				setCustomers(data.customers);
-			})
-			.catch((e) => {
-				console.log(e.message);
-			});
-	}, []); */
+	// useEffect(() => {
+	// 	console.log(customers, errorStatus, request, appendData);
+	// });
 
 	function NewCustomer(name, industry) {
-		/* 	const data = { name: name, industry: industry };
+		appendData({ name: name, industry: industry });
 
-		console.log('inside NewCustomer fn');
-		const url = baseUrl + apiCustomerUrl;
-
-		fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + localStorage.getItem('access'),
-			},
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (response.status === 401) {
-					navigate('/login');
-				}
-				if (!response.ok) {
-					throw new Error('Something went wrong');
-				}
-				return response.json();
-			})
-			.then((data) => {
-				toggleShow();
-				console.log(data);
-				setCustomers([...customers, data.customer]);
-			})
-			.catch((e) => {
-				console.log(e.message);
-			}); */
+		if (!errorStatus) {
+			toggleShow();
+		}
 	}
 
 	// return <p>Work in Progress</p>;
@@ -149,13 +100,13 @@ export default function Customers() {
 							);
 						})}
 					</div>
-					{/* <div>
+					<div>
 						<AddCustomer
 							NewCustomer={NewCustomer}
 							show={show}
 							toggleShow={toggleShow}
 						/>
-					</div> */}
+					</div>
 				</div>
 			) : null}
 		</>
