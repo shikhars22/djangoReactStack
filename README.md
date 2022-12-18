@@ -4,8 +4,8 @@
 
 https://www.codebreakthrough.com/free-react-course
 
-This repository contains code from Video 1 - Video 53
-Rest of the code from Video 54 can be found in [typeScriptStack](https://github.com/shikhars22/typeScriptStack)
+### This repository contains code from Video 1 - Video 53
+### Rest of the code from Video 54 can be found in [typeScriptStack](https://github.com/shikhars22/typeScriptStack)
 
 ### Youtube Playlist:
 https://www.youtube.com/watch?v=qp6e0tucEhw&list=PL_c9BZzLwBRKFRIBWEWYCnV4Lk9HE3eYJ&index=2  
