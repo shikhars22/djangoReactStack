@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from customers import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from graphene_django.views import GraphQLView
+from customers.schema import schema
 
 urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -25,4 +27,5 @@ urlpatterns = [
     path('api/customers/', views.customers, name='customers'),
     path('api/customers/<int:id>', views.customer, name='customer'),
     path('api/register', views.register, name='register'),
+    path('graphql', GraphQLView.as_view(graphiql=True, schema=schema)),
 ]
