@@ -78,7 +78,7 @@ export default function Customer() {
 	function updateCustomer(e) {
 		e.preventDefault();
 		// console.log('inside update customer');
-		const url = baseUrl + apiCustomerUrl + id;
+		const url = baseUrl + apiCustomerUrl + id + '/';
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -169,7 +169,7 @@ export default function Customer() {
 							onSubmit={updateCustomer}>
 							<div className='md:flex md:items-center'>
 								<div className='md:w-1/4'>
-									<label for='name'>Name</label>
+									<label htmlFor='name'>Name</label>
 								</div>
 								<div className='md:w-3/4'>
 									<input
@@ -194,7 +194,7 @@ export default function Customer() {
 							</div>
 							<div className='md:flex md:items-center mb-2'>
 								<div className='md:w-1/4'>
-									<label for='industry'>Industry</label>
+									<label htmlFor='industry'>Industry</label>
 								</div>
 								<div className='md:w-3/4'>
 									<input
@@ -221,7 +221,7 @@ export default function Customer() {
 					</div>
 
 					{changed ? (
-						<p>
+						<div>
 							<div className='mb-2'>
 								<br />
 								<br />
@@ -241,7 +241,7 @@ export default function Customer() {
 									Save
 								</button>
 							</div>
-						</p>
+						</div>
 					) : null}
 					<br />
 					<br />
