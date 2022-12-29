@@ -21,12 +21,24 @@ class CreateCustomer(graphene.Mutation):
     customer = graphene.Field(CustomerType)
 
     def mutate(root, info, name, industry):
-        #define the customer object and save to db
-        # time.sleep(5)
-        # raise
         customer = Customer(name=name, industry=industry)
         customer.save()
         return CreateCustomer(customer=customer)
+
+class CreateOrder(graphene.Mutation):
+    class Arguments:
+        description = graphene.String()
+        totalInCents = graphene.Int()
+        customer = graphene.ID()
+
+    order = graphene.Field(OrderType)
+
+    def mutate(root, info, description, totalInCents, customer):
+        # customerObj = Customer.objects.get(pk=customer)
+        # order = Order(description=description, totalInCents=totalInCents, customer=customerObj)
+        order = Order(description=description, totalInCents=totalInCents, customer_id=customer)
+        order.save()
+        return  CreateOrder(order=order)
 
 class Query(graphene.ObjectType):
     customers = graphene.List(CustomerType)
@@ -47,5 +59,6 @@ class Query(graphene.ObjectType):
 
 class Mutations(graphene.ObjectType):
     createCustomer = CreateCustomer.Field()
+    createOrder = CreateOrder.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
